@@ -3,7 +3,6 @@ package com.company.project.configurer;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
-import com.company.project.interceptor.TokenArgumentResolver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,8 +24,6 @@ import java.util.List;
 @Configuration
 @Slf4j
 public class WebMvcConfigurer extends WebMvcConfigurationSupport {
-    @Autowired
-    private TokenArgumentResolver tokenArgumentResolver;
 
     @Value("${spring.profiles.active}")
     //当前激活的配置文件
@@ -56,7 +53,6 @@ public class WebMvcConfigurer extends WebMvcConfigurationSupport {
     //添加参数拦截器
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(tokenArgumentResolver);
         super.addArgumentResolvers(argumentResolvers);
     }
 

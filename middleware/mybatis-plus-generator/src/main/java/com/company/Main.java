@@ -30,11 +30,11 @@ public class Main {
 
 
     //数据库配置========
-    private static final String dbUrl="jdbc:mysql://192.168.56.101:3306/test?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
+    private static final String dbUrl="jdbc:mysql://127。0。0。1:3306/example?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true";
     private static final String dbDriver="com.mysql.cj.jdbc.Driver";
 
     private static final String dbUserName="root";
-    private static final String dbPassword="123456";
+    private static final String dbPassword="libi1206";
 
     private static final String devAuthor="libi";
 

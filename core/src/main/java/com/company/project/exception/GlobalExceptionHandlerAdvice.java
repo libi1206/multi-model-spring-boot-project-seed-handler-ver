@@ -2,7 +2,7 @@ package com.company.project.exception;
 
 
 import com.company.project.constent.Code;
-import com.company.project.response.BaseResult;
+import com.company.project.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,18 +20,18 @@ public class GlobalExceptionHandlerAdvice {
 
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
-    public BaseResult handleBusinessException(BusinessException be) {
-        log.error(be.getMsg());
+    public BaseResponse handleBusinessException(BusinessException be) {
+        log.error(be.getMessage());
         be.printStackTrace();
-        return be.getBaseResult();
+        return new BaseResponse(be.getCode(), be.getMsg());
     }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public BaseResult handleDefaultException(Exception be) {
+    public BaseResponse handleDefaultException(Exception be) {
         log.error(be.getMessage());
         be.printStackTrace();
-        return new BaseResult(Code.UNKNOWN_ABNORMAL.getCode(), Code.UNKNOWN_ABNORMAL.getMsg(), be.getMessage());
+        return new BaseResponse(Code.UNKNOWN_ABNORMAL);
     }
 
 
