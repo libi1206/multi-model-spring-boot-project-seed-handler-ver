@@ -4,7 +4,7 @@ import cn.hutool.core.util.ReUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
-import com.company.project.bean.SysApiCfgDo;
+import com.company.project.bean.SysApiCfg;
 import com.company.project.compoment.BizContextManager;
 import com.company.project.compoment.SysApiCfgManager;
 import com.company.project.compoment.TokenManager;
@@ -109,7 +109,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
     public static BaseSupperAdaptor getAdaptor(String bizId, String kindId, BaseRequest baseReq, BaseResponse baseRsp, SysApiCfgManager sysApiCfgManager, ApplicationContext applicationContext){
         String apiVersion = baseReq.getApiVersion();
         //1）获取处理类
-        SysApiCfgDo sysApiCfg = sysApiCfgManager.getSysApiCfg(kindId, apiVersion);
+        SysApiCfg sysApiCfg = sysApiCfgManager.getSysApiCfg(kindId, apiVersion);
         if (sysApiCfg == null){
             Map<String,String> elMap=new HashMap<>();
             elMap.put("kindId",kindId);
@@ -155,7 +155,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/9 18:18
      */
-    public IN parseINObject(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, BaseResponse baseRspz, HttpServletRequest request, HttpServletResponse response){
+    public IN parseINObject(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, BaseResponse baseRspz, HttpServletRequest request, HttpServletResponse response){
         JSONObject data = baseReq.getData();
         if (data == null){
             return null;
@@ -176,9 +176,9 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
     }
 
 
-    public abstract OUT handlerBiz(String bizId, SysApiCfgDo sysApiCf, IN reqData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response);
+    public abstract OUT handlerBiz(String bizId, SysApiCfg sysApiCf, IN reqData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response);
 
-    public void validateRspData(String bizId, SysApiCfgDo sysApiCf, IN reqData, OUT rspData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
+    public void validateRspData(String bizId, SysApiCfg sysApiCf, IN reqData, OUT rspData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
         return;
     }
 
@@ -189,7 +189,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/12 19:56
      */
-    public void validateReqData(String bizId, SysApiCfgDo sysApiCfg, IN reqData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
+    public void validateReqData(String bizId, SysApiCfg sysApiCfg, IN reqData, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
         Set<ConstraintViolation<IN>> validate =
                 validatorFactory
                         .getValidator()
@@ -203,7 +203,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
         }
     }
 
-    public BaseResponse putRspData2BaseRsp(String domain, String bizId, SysApiCfgDo sysApiCf, BaseRequest baseReq, BaseResponse baseRsp, IN reqData, OUT rspData, JSONObject extData, HttpServletRequest request, HttpServletResponse response){
+    public BaseResponse putRspData2BaseRsp(String domain, String bizId, SysApiCfg sysApiCf, BaseRequest baseReq, BaseResponse baseRsp, IN reqData, OUT rspData, JSONObject extData, HttpServletRequest request, HttpServletResponse response){
         baseRsp.setDomain(domain);
         baseRsp.setTransIDH(bizId);
         baseRsp.setTransIDO(baseReq.getTransIDO());
@@ -216,7 +216,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
         return baseRsp;
     }
 
-    public JSONObject handlerBizExt(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, IN reqData, BaseResponse baseRsp, OUT rspData, HttpServletRequest request, HttpServletResponse response){
+    public JSONObject handlerBizExt(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, IN reqData, BaseResponse baseRsp, OUT rspData, HttpServletRequest request, HttpServletResponse response){
         return null;
     }
 
@@ -227,8 +227,8 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/10 14:09
      */
-    public SysApiCfgDo getApiCfg(String bizId, String kindId, BaseRequest baseReq, BaseResponse baseRsp, SysApiCfgManager sysApiCfgManager){
-        SysApiCfgDo sysApiCfg = sysApiCfgManager.getSysApiCfg(kindId, baseReq.getApiVersion());
+    public SysApiCfg getApiCfg(String bizId, String kindId, BaseRequest baseReq, BaseResponse baseRsp, SysApiCfgManager sysApiCfgManager){
+        SysApiCfg sysApiCfg = sysApiCfgManager.getSysApiCfg(kindId, baseReq.getApiVersion());
         if (sysApiCfg == null){
             //根据kindId=${kindId},apiVersion=${apiVersion}未获取到有效的接口配置，请联系系统管理员
             Map<String,String> elMap=new HashMap<>();
@@ -246,7 +246,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/14 14:09
      */
-    public void validateBlackAndWhiteIp(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response, String accessIp){
+    public void validateBlackAndWhiteIp(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response, String accessIp){
         //黑名单校验
         String ipBlackExps = sysApiCfg.getIpBlackExps();
         if (StringUtils.startsWithIgnoreCase(ipBlackExps,"denyAll")){
@@ -285,7 +285,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/14 14:09
      */
-    public void validateReqSign(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
+    public void validateReqSign(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
 
     }
 
@@ -296,7 +296,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/14 14:10
      */
-    public void validateAccessToken(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
+    public void validateAccessToken(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
         //1:需要校验 0：不需要校验
         String checkTag = sysApiCfg.getAccessTokenCheckTag();
         if (StringUtils.equals("1",checkTag)){
@@ -318,7 +318,7 @@ public abstract class BaseSupperAdaptor<IN,OUT> {
      *  @author fuyongchao
      *  @since 2022/1/14 14:11
      */
-    public void validateResourceAuth(String bizId, SysApiCfgDo sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
+    public void validateResourceAuth(String bizId, SysApiCfg sysApiCfg, BaseRequest baseReq, BaseResponse baseRsp, HttpServletRequest request, HttpServletResponse response){
         //只有有用户登录才会有权限的说法，所以必须先确保有用户概念
         String tokenCheckTag = sysApiCfg.getAccessTokenCheckTag();
         if (StringUtils.equals("1",tokenCheckTag)){

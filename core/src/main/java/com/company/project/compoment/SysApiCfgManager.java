@@ -1,6 +1,6 @@
 package com.company.project.compoment;
 
-import com.company.project.bean.SysApiCfgDo;
+import com.company.project.bean.SysApiCfg;
 import com.company.project.service.SysApiCfgService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,8 +19,8 @@ public class SysApiCfgManager {
      * key kindId|apiVersion
      * value sysApiCfg
      * */
-    private Map<String, SysApiCfgDo> cache=new HashMap<>();
-    private Map<String,SysApiCfgDo> cacheTemp=new HashMap<>();
+    private Map<String, SysApiCfg> cache=new HashMap<>();
+    private Map<String, SysApiCfg> cacheTemp=new HashMap<>();
     /**
      * 是否正在初始化
      * true :正在初始化   false:未在初始化
@@ -38,10 +38,10 @@ public class SysApiCfgManager {
      */
     @PostConstruct
     public synchronized boolean reloadMap(){
-        List<SysApiCfgDo> list = sysApiCfgService.getApiList();
+        List<SysApiCfg> list = sysApiCfgService.getApiList();
         if (list !=null && list.size() >0){
-            Map<String, SysApiCfgDo> temp=new HashMap<>();
-            for (SysApiCfgDo api:list){
+            Map<String, SysApiCfg> temp=new HashMap<>();
+            for (SysApiCfg api:list){
                 temp.put(api.getKindId()+"|"+api.getApiVersion(),api);
             }
             this.cacheTemp.clear();
@@ -63,7 +63,7 @@ public class SysApiCfgManager {
      *  @author fuyongchao
      *  @since 2022/1/9 13:57
      */
-    public SysApiCfgDo getSysApiCfg(String kindId,String apiVersion){
+    public SysApiCfg getSysApiCfg(String kindId, String apiVersion){
         if(init){
             return this.cacheTemp.get(kindId+"|"+apiVersion);
         }

@@ -15,7 +15,7 @@ import java.util.Date;
  * @date 2022-04-08 16:08:15
  */
 @TableName("sys_api_cfg")
-public class SysApiCfgDo implements Serializable {
+public class SysApiCfg implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

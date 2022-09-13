@@ -1,7 +1,7 @@
 package com.company.project.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.company.project.bean.SysApiCfgDo;
+import com.company.project.bean.SysApiCfg;
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
  *@date 2022-04-08 16:08:15
  */
 @Mapper
-public interface SysApiCfgDao extends BaseMapper<SysApiCfgDo> {
+public interface SysApiCfgDao extends BaseMapper<SysApiCfg> {
 
 }

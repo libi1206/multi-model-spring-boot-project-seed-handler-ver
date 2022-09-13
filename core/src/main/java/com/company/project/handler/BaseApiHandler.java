@@ -3,7 +3,7 @@ package com.company.project.handler;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.company.project.bean.SysApiCfgDo;
+import com.company.project.bean.SysApiCfg;
 import com.company.project.compoment.BizContextManager;
 import com.company.project.compoment.SysApiCfgManager;
 import com.company.project.handler.adaptor.BaseSupperAdaptor;
@@ -57,7 +57,7 @@ public class BaseApiHandler {
             BaseSupperAdaptor adaptor = BaseSupperAdaptor.getAdaptor(bizId,kindId, baseReq, baseRsp, sysApiCfgManager, applicationContext);
             log.info("【Requestor->Api】处理类：{}",adaptor);
             //获取接口配置信息
-            SysApiCfgDo sysApiCfg=adaptor.getApiCfg(bizId,kindId, baseReq, baseRsp, sysApiCfgManager);
+            SysApiCfg sysApiCfg=adaptor.getApiCfg(bizId,kindId, baseReq, baseRsp, sysApiCfgManager);
             //黑白名单校验
             adaptor.validateBlackAndWhiteIp(bizId,sysApiCfg,baseReq,baseRsp,request,response,accessIp);
             //签名校验

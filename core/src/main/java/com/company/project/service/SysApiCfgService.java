@@ -1,7 +1,7 @@
 package com.company.project.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.company.project.bean.SysApiCfgDo;
+import com.company.project.bean.SysApiCfg;
 
 import java.util.List;
 
@@ -11,9 +11,9 @@ import java.util.List;
  * @description 接口配置表
  * @date 2022-04-08 16:08:15
  */
-public interface SysApiCfgService extends IService<SysApiCfgDo> {
-    SysApiCfgDo getSysApiCfg(String kindId, String apiVersion);
+public interface SysApiCfgService extends IService<SysApiCfg> {
+    SysApiCfg getSysApiCfg(String kindId, String apiVersion);
 
-    List<SysApiCfgDo> getApiList();
+    List<SysApiCfg> getApiList();
 }
 
